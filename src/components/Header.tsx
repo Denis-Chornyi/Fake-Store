@@ -12,7 +12,7 @@ const Header: React.FC<HeaderType> = ({ showCart, setShowCart }) => {
     state.cart.items.reduce((acc, item) => acc + item.quantity, 0)
   );
   return (
-    <header className="bg-white shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-40  bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold text-gray-900">

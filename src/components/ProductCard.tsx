@@ -1,8 +1,9 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Product } from "../types/product";
 import { addItem } from "../store/cartSlice";
-import { ShoppingCart } from "lucide-react";
+import { RootState } from "../store/store";
+import { ShoppingCart, Check } from "lucide-react";
 
 interface ProductCardProps {
   product: Product;
@@ -11,6 +12,9 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
   const dispatch = useDispatch();
+
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const isInCart = cartItems.some((item) => item.id === product.id);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -34,10 +38,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
         <h3 className="text-lg font-semibold truncate">{product.title}</h3>
 
         <p className="text-sm text-gray-500 mt-1">{product.category.name}</p>
-
         <div className="flex justify-between items-center mt-4">
           <span className="text-xl font-bold">${product.price}</span>
-
+          <div className="flex items-center gap-2">
+            {isInCart && <Check className="w-5 h-5 text-green-500" />}
+          </div>
           <button
             onClick={handleAddToCart}
             className="flex items-center gap-2 text-white px-4 py-2 rounded-lg bg-gradient-to-r from-blue-400 to-indigo-600 hover:from-blue-500 hover:to-indigo-700 transition-colors"
